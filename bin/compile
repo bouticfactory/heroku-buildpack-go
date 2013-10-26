@@ -83,6 +83,17 @@ cp -R $build/* $p
 
 unset GIT_DIR # unset git dir or it will mess with goinstall
 cd $p
+# Install heroku scheduler programs
+if test -f $p/background/
+then
+    echo "-----> Installing background jobs from background/"
+    for $b in $(ls $p/background/)
+    do;
+	go build $name/$p/$b
+	mv $b $build/bin
+    done;
+fi;
+
 if test -f $build/Godeps
 then
     echo "-----> Running: godep go get -tags heroku ./..."
