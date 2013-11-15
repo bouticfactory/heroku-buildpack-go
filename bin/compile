@@ -87,12 +87,11 @@ cd $p
 if test -f $p/background/
 then
     echo "-----> Installing background jobs from background/"
-    for $b in $(ls $p/background/)
-    do;
-	go build $name/$p/$b
-	mv $b $build/bin
-    done;
-fi;
+    for b in $(ls $p/background/); do
+        go build $name/$p/$b
+        mv $b $build/bin
+    done
+fi
 
 if test -f $build/Godeps
 then
