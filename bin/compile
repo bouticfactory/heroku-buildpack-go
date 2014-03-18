@@ -93,6 +93,22 @@ then
     done
 fi
 
+# 'Manually' clone some private Git repositories
+if [ -n "$PRIV_SSH_KEY" ]; then
+    echo "-----> Clone some private Git repositories"
+    mkdir -p ~/.ssh
+    echo "$PRIV_SSH_KEY" > ~/.ssh/id_rsa
+    echo "$PRIV_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    chmod 700 ~/.ssh
+    chmod 600 ~/.ssh/id_rsa
+    mkdir -p $GOPATH/src/$PRIV_GO_BASE_IMPORT_PATH
+    if [ -n "$PRIV_GO_LIBS" ]; then
+        for repo in $PRIV_GO_LIBS; do
+            git clone ssh://$PRIV_REPO_HOST/~/$repo.git $GOPATH/src/$PRIV_GO_BASE_IMPORT_PATH/$repo
+        done
+    fi
+fi
+
 if test -f $build/Godeps
 then
     echo "-----> Running: godep go get -tags heroku ./..."
