@@ -103,7 +103,9 @@ if [ -n "$PRIV_SSH_KEY" ]; then
     mkdir -p $GOPATH/src/$PRIV_GO_BASE_IMPORT_PATH
     if [ -n "$PRIV_GO_LIBS" ]; then
         for repo in $PRIV_GO_LIBS; do
-            git clone ssh://$PRIV_REPO_HOST/~/$repo.git $GOPATH/src/$PRIV_GO_BASE_IMPORT_PATH/$repo
+            ADDR="ssh://$PRIV_REPO_HOST/~/$repo.git"
+            echo "* $repo => $ADDR"
+            git clone $ADDR $GOPATH/src/$PRIV_GO_BASE_IMPORT_PATH/$repo
         done
     fi
 fi
