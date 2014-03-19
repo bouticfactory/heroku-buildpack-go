@@ -78,7 +78,7 @@ then
 fi
 
 # 'Manually' clone some private Git repositories
-echo "==> DEBUG ENV: $3"
+echo "==> DEBUG ENV: $(cat $3)"
 if [ -n "$PRIV_SSH_KEY" ]; then
     echo "-----> Clone some private Git repositories"
     mkdir -p ~/.ssh
