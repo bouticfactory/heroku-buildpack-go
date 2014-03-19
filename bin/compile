@@ -78,7 +78,21 @@ then
 fi
 
 # 'Manually' clone some private Git repositories
-echo "==> DEBUG ENV: $(ls -lh $3)"
+# Export the content of ENV_DIR into the environment
+export_env_dir() {
+    local env_dir=$1
+    local whitelist_regex=${2:-''}
+    local blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+    if [ -d "$env_dir" ]; then
+        for e in $(ls $env_dir); do
+        echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+        export "$e=$(cat $env_dir/$e)"
+        :
+    done
+    fi
+}
+export_env_dir $3
+
 if [ -n "$PRIV_SSH_KEY" ]; then
     echo "-----> Clone some private Git repositories"
     mkdir -p ~/.ssh
