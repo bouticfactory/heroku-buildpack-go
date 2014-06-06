@@ -61,7 +61,7 @@ GOPATH=$build/.heroku/g export GOPATH
 PATH=$GOROOT/bin:$PATH
 
 echo -n "       Installing Virtualenv..."
-virtualenv --python $python --distribute --never-download --prompt='(venv) ' $venv > /dev/null 2>&1
+virtualenv --python $python --distribute --never-download --prompt='(venv) ' $venv
 . $venv/bin/activate > /dev/null 2>&1
 echo " done"
 
